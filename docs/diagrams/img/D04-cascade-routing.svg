@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1025" height="750" viewBox="-32 -32 1025 750">
+<rect x="-32" y="-32" width="1025" height="750" fill="#FFFFFF"/>
+<polyline points="470.0,228 470.0,298" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="475.0,287.0 470.0,298 465.0,287.0" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="470.0,385 470.0,450" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="475.0,439.0 470.0,450 465.0,439.0" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="616,341.5 676,341.5" fill="none" stroke="#A63238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+<polyline points="665.0,336.5 676,341.5 665.0,346.5" fill="none" stroke="#A63238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="158.0,228 158.0,493.5 324.0,493.5" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="313.0,488.5 324.0,493.5 313.0,498.5" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="946,184.0 961,184.0 961,558.0 470,558.0 470.0,537.0" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="465.0,548.0 470.0,537.0 475.0,548.0" fill="none" stroke="#516176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="811.0,385 811.0,493.5 616.0,493.5" fill="none" stroke="#A63238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+<polyline points="627.0,498.5 616.0,493.5 627.0,488.5" fill="none" stroke="#A63238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="0" y="146" width="316" height="76" rx="12" fill="#EBEDFF" stroke="#444DA0" stroke-width="2"/>
+<rect x="322" y="146" width="296" height="76" rx="12" fill="#F1EAFE" stroke="#6445A1" stroke-width="2"/>
+<rect x="624" y="146" width="316" height="76" rx="12" fill="#EBEDFF" stroke="#444DA0" stroke-width="2"/>
+<rect x="330" y="304" width="280" height="75" rx="12" fill="#F1EAFE" stroke="#6445A1" stroke-width="2"/>
+<rect x="682" y="304" width="258" height="75" rx="12" fill="#FDEBEC" stroke="#A63238" stroke-width="2"/>
+<rect x="330" y="456" width="280" height="75" rx="12" fill="#FFF1D7" stroke="#895813" stroke-width="2"/>
+<rect x="0" y="586" width="940" height="54" rx="12" fill="#F0F3F7" stroke="#516176" stroke-width="2"/>
+<rect x="44" y="670" width="18" height="15" rx="0" fill="#EBEDFF" stroke="#444DA0" stroke-width="2"/>
+<rect x="149" y="670" width="18" height="15" rx="0" fill="#F1EAFE" stroke="#6445A1" stroke-width="2"/>
+<rect x="255" y="670" width="18" height="15" rx="0" fill="#FFF1D7" stroke="#895813" stroke-width="2"/>
+<rect x="357" y="670" width="18" height="15" rx="0" fill="#F0F3F7" stroke="#516176" stroke-width="2"/>
+<rect x="463" y="670" width="18" height="15" rx="0" fill="#FDEBEC" stroke="#A63238" stroke-width="2"/>
+<text x="0" y="16.0" fill="#444DA0" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">FIGURE D04</text>
+<text x="0" y="62.0" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="33" text-anchor="start">The score band bounds re-scoring volume</text>
+<text x="0" y="97.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="start">Proposed routing · Boundaries L and U are selected on validation data</text>
+<text x="158.005" y="179.5" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Score below L</text>
+<text x="158.005" y="202.0" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Classical decision path</text>
+<text x="470.005" y="179.5" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">L ≤ score ≤ U</text>
+<text x="470.005" y="202.0" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Quantum re-score eligible</text>
+<text x="782.005" y="179.5" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Score above U</text>
+<text x="782.005" y="202.0" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Classical decision path</text>
+<text x="469.995" y="348.25" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Get a bounded quantum score</text>
+<text x="811.0" y="337.0" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Use validated classical</text>
+<text x="811.0" y="359.5" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">fallback</text>
+<text x="469.995" y="500.25" fill="#18263A" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="18" text-anchor="middle">Apply the versioned cost policy</text>
+<text x="512.005" y="265.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="middle">eligible</text>
+<text x="515.0" y="417.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="middle">scores</text>
+<text x="646.0" y="333.5" fill="#A63238" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="middle">error</text>
+<text x="205.0" y="475.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="middle">bypass</text>
+<text x="862.0" y="552.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="middle">bypass</text>
+<text x="15" y="615.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="17" text-anchor="start">Illustrative band geometry. The 1–5% routed share is a planning assumption to validate.</text>
+<text x="0" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Key</text>
+<text x="69" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Classical</text>
+<text x="174" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Quantum</text>
+<text x="280" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Decision</text>
+<text x="382" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Evidence</text>
+<text x="488" y="682.0" fill="#516176" font-family="Arial, Liberation Sans, DejaVu Sans, sans-serif" font-size="16" text-anchor="start">Risk</text>
+</svg>
