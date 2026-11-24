@@ -1,10 +1,22 @@
 # Needlecast
 
-**Hybrid quantum–classical credit card fraud detection**
+Hybrid quantum–classical credit card fraud detection
 
 Needlecast is a research project that tests whether a quantum model can improve fraud decisions on transactions a classical model finds difficult to classify. A classical model screens every transaction. A quantum support vector machine (QSVM) re-scores only the cases inside an uncertainty band. A cost-based policy then decides which transactions to flag for review.
 
-**Project stage — Design and experiment planning.** The repository specifies the architecture, model comparisons, and serving contracts. The models, API, and dashboard are planned. Performance and cost are to be measured.
+**Project stage — Foundation scaffold.** The API and dashboard illustrate the scoring and reporting contracts with deterministic placeholder data. Model training, validated inference, and measured results are planned.
+
+## Quick start
+
+Use Python 3.11–3.13 and Node.js 22 or newer.
+
+```bash
+make setup
+make sample-artifacts
+make dev
+```
+
+Open [the dashboard](http://127.0.0.1:3000) or [the API documentation](http://127.0.0.1:8000/docs). Run `make setup-integrations` to add ECharts and the optional browser and contract tools. See the [developer guide](docs/21-developer-guide.md) for local checks and Compose commands.
 
 ## Contents
 
@@ -19,6 +31,7 @@ Needlecast is a research project that tests whether a quantum model can improve 
 - [API and dashboard](#api-and-dashboard)
 - [Technology stack](#technology-stack)
 - [Development and deployment](#development-and-deployment)
+- [Implementation roadmap](docs/roadmap/README.md)
 - [Research references](#research-references)
 
 ## Problem and scope
@@ -29,9 +42,9 @@ The system is designed to surface cases for analyst review. Its central question
 
 ## Proposed architecture
 
-![Needlecast architecture from transaction inputs and model routing through artifacts, API, and dashboard](docs/diagrams/img/D02-layered-architecture.svg)
+![Proposed Needlecast architecture showing live scoring, offline model publication, PostgreSQL metadata, and artifact storage](docs/diagrams/img/D02-layered-architecture.svg)
 
-*The classical screen handles the full stream, while only uncertain cases enter the quantum stage. Offline experiments separately publish versioned results and fitted models for serving.*
+*The API uses one validated model bundle per request. The classical screen scores every transaction and sends cases in the uncertainty band to the QSVM. A timeout or error sends the case back to the classical policy.*
 
 | Stage | Responsibility | Output |
 | --- | --- | --- |
@@ -44,7 +57,7 @@ The system is designed to surface cases for analyst review. Its central question
 
 ## End-to-end workflow
 
-![Four phases from dataset preparation through model comparison, policy selection, and publishing](docs/diagrams/img/D03-end-to-end-workflow.svg)
+![Offline workflow showing chronological splits, parallel model training, policy selection and freeze, held-out evaluation, and bundle validation before activation](docs/diagrams/img/D03-end-to-end-workflow.svg)
 
 1. **Prepare.** Record dataset versions and checksums, audit for leakage, and reserve the most recent eligible period for testing.
 2. **Model.** Fit classical baselines, then run the quantum comparisons using matched features and training samples.
@@ -136,42 +149,47 @@ The evaluation will report the tradeoff between fraud recall and the share of tr
 
 ![Serving sequence from score submission to the recorded classical or quantum route](docs/diagrams/img/D21-scoring-sequence.svg)
 
-The planned FastAPI service loads a validated bundle and runs bounded inference. Training and experiment jobs run separately. An artifact bundle includes the dataset and split IDs, transform and model versions, configuration, seeds, code revision, checksums, metrics, and circuit diagnostics. A failed publication leaves the previous validated bundle available.
+The FastAPI scaffold runs on Uvicorn and validates requests with Pydantic. It serves the bundled placeholder fixtures, deterministically simulates scoring, and queues simulated experiments. The planned live service will load a validated model bundle and run bounded inference. An artifact bundle includes the dataset and split IDs, transform and model versions, configuration, seeds, code revision, checksums, metrics, and circuit diagnostics. A failed publication leaves the previous validated bundle available.
 
-| Planned interface | Purpose |
+| Scaffolded interface | Purpose |
 | --- | --- |
 | `POST /api/score` | Validate the input feature schema and return the stage-by-stage trace. |
 | `GET /api/datasets` and `GET /api/pipeline/reduction` | Show dataset provenance, split statistics, and feature-reduction settings. |
 | `GET /api/models/*` and `GET /api/diagnostics/*` | Serve comparisons, ablations, circuits, kernel heatmaps, gradients, and noise measurements. |
 | `POST /api/jobs/run` and `GET /api/jobs/{id}` | Queue an authorized offline experiment and retrieve its status. |
 
-The Next.js dashboard is planned to show dataset provenance, feature reduction, model comparisons, diagnostics, and individual scoring traces. Clearly label demonstration fixtures and restrict customer data, scores, and explanations to authorized users.
+The Next.js dashboard presents sample dataset provenance, feature reduction, comparisons, diagnostics, and scoring traces. With the chart integration installed, Apache ECharts displays the underlying curves, heatmaps, and bars. Every page carries a placeholder banner. See the [placeholder data policy](docs/stub-data-policy.md).
 
 ## Technology stack
 
 The stack below describes the target implementation. Exact dependency versions and compatibility will be verified when the implementation is in place.
 
-| Layer | Tools and official documentation |
-| --- | --- |
-| Data and classical ML | [Python 3.11](https://docs.python.org/3.11/), [scikit-learn](https://scikit-learn.org/stable/), [XGBoost](https://xgboost.readthedocs.io/en/stable/), [imbalanced-learn](https://imbalanced-learn.org/stable/), and [PyTorch](https://github.com/pytorch/pytorch) |
-| Quantum models and simulation | [PennyLane](https://pennylane.ai/) and [Lightning](https://docs.pennylane.ai/projects/lightning/en/stable/), [Qiskit](https://quantum.cloud.ibm.com/docs/en/guides), [Qiskit Machine Learning](https://github.com/qiskit-community/qiskit-machine-learning), and [Qiskit Aer](https://qiskit.github.io/qiskit-aer/) |
-| Explanations and experiments | [SHAP](https://shap.readthedocs.io/en/latest/) and optional [MLflow](https://mlflow.org/) |
-| API and schemas | [FastAPI](https://fastapi.tiangolo.com/) and [Pydantic](https://docs.pydantic.dev/latest/) |
-| Web application | [Node.js](https://nodejs.org/en/about/previous-releases), [Next.js App Router](https://nextjs.org/docs/app), [TypeScript](https://www.typescriptlang.org/docs/), [Tailwind CSS](https://tailwindcss.com/docs), [shadcn/ui](https://ui.shadcn.com/), and [Apache ECharts](https://echarts.apache.org/) |
-| Integration and deployment | [openapi-typescript](https://openapi-ts.dev/) for client types, [Next.js rewrites](https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites) for API proxying, and [Docker Compose](https://docs.docker.com/compose/) for local integration |
-| Optional hardware | [IBM Quantum](https://quantum.cloud.ibm.com/) for a small, separately measured hardware experiment |
+| Layer | Tools and official documentation | Role |
+| --- | --- | --- |
+| Offline ML | [PennyLane](https://pennylane.ai/) with [Lightning](https://docs.pennylane.ai/projects/lightning/en/stable/), [Qiskit](https://quantum.cloud.ibm.com/docs/en/guides), [scikit-learn](https://scikit-learn.org/stable/), [XGBoost](https://xgboost.readthedocs.io/en/stable/), [PyTorch](https://github.com/pytorch/pytorch), [imbalanced-learn](https://imbalanced-learn.org/stable/), [SHAP](https://shap.readthedocs.io/en/latest/) | Quantum simulation, classical baselines, hybrid neural models, imbalance handling, and explanations. |
+| Backend | [FastAPI](https://fastapi.tiangolo.com/), [Pydantic](https://docs.pydantic.dev/latest/), [Uvicorn](https://github.com/Kludex/uvicorn) | API endpoints, schema validation, and serving. |
+| Database | [PostgreSQL](https://www.postgresql.org/docs/), [SQLAlchemy 2.x](https://docs.sqlalchemy.org/en/20/), [Alembic](https://alembic.sqlalchemy.org/en/latest/) | Run and job metadata and references to published bundles. SQLAlchemy handles database access, and Alembic manages schema migrations. |
+| Large artifact storage | Local `artifacts/` directory, optional [MinIO](https://github.com/minio/minio) Compose service | Store fitted models, kernel matrices, and diagnostic files. MinIO provides an S3-compatible backend. |
+| Cache (optional) | [Redis](https://redis.io/docs/latest/) | Cache expensive reads such as kernel heatmaps and support API rate limiting. |
+| Frontend | [Next.js App Router](https://nextjs.org/docs/app), [TypeScript](https://www.typescriptlang.org/docs/), [Tailwind CSS](https://tailwindcss.com/docs), [shadcn/ui](https://ui.shadcn.com/) | Build the analyst dashboard and proxy API requests from the same origin. |
+| Charts | [Apache ECharts](https://echarts.apache.org/) via [`echarts-for-react`](https://github.com/hustcc/echarts-for-react) | Render kernel heatmaps, PR and ROC curves, and bar charts with one chart library. |
+| Tracking and packaging | Optional [MLflow](https://mlflow.org/docs/latest/self-hosting/architecture/backend-store/), [Docker Compose](https://docs.docker.com/compose/) | Track experiments using the same PostgreSQL service as the backend store and run the project’s services locally. |
+
+The planned storage interface keeps file access behind a configurable backend. Published prototype bundles use `artifacts/`. The scaffold reads generated fixtures from `ml/artifacts/sample/`. Production can use an [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) or [Google Cloud Storage](https://docs.cloud.google.com/storage/docs/interoperability) backend without changing scoring or training code once the corresponding backend is configured.
 
 ## Development and deployment
 
+![Needlecast roadmap showing the foundation scaffold and the completion criteria for the offline prototype, scoring service and dashboard, shadow evaluation, and controlled deployment](docs/diagrams/img/D22-development-roadmap.svg)
+
 | Milestone | Completion criterion |
 | --- | --- |
-| **Design** · current | Document the scoring pipeline, models, evaluation, and service interfaces. |
+| **Design and foundation** · scaffolded (stub) | Document the design and demonstrate the contracts with placeholder data. |
 | **Offline prototype** · planned | Reproduce dataset splits, train baselines, run matched quantum comparisons, and publish versioned results. |
 | **Scoring service and dashboard** · planned | Serve a validated bundle, display scoring traces, and exercise timeouts and fallback. |
 | **Shadow evaluation** · planned | Measure drift, latency, review volume, and cost with no effect on customer-facing decisions. |
 | **Controlled deployment** · planned | Verify access controls, audit records, operational limits, and rollback before broader use. |
 
-For implementation details, see [system design](docs/system-design.md), [data and models](docs/data-and-models.md), [evaluation protocol](docs/experiment-protocol.md), and [serving and deployment](docs/serving-and-deployment.md).
+See the [implementation roadmap](docs/roadmap/README.md), [component status](docs/01-overview.md), and [documentation index](docs/index.md). License selection is a TODO for the project owner.
 
 ## Research references
 

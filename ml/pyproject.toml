@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "needlecast-ml"
+version = "0.1.0"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[project.scripts]
+needlecast-ml = "needlecast_ml.cli:app"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/base.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]

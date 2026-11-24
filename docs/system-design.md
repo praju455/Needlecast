@@ -1,6 +1,6 @@
 # System design
 
-Needlecast is in the design phase. The architecture separates the offline experiment pipeline from the scoring service. The experiment pipeline fits and evaluates models. The service loads a validated run and scores incoming transactions.
+The M00 scaffold demonstrates this design with placeholders. The paths below describe validated serving. The architecture separates the offline experiment pipeline from the scoring service. The experiment pipeline fits and evaluates models. The service loads a validated run and scores incoming transactions.
 
 ![Needlecast architecture showing the classical screen, optional quantum re-score, and serving boundary](diagrams/img/D02-layered-architecture.svg)
 

@@ -1,0 +1,13 @@
+services:
+  backend:
+    command: ["python", "-m", "uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--reload", "--no-access-log"]
+    volumes:
+      - ./backend/app:/app/backend/app:ro
+      - ./ml/src:/app/ml/src:ro
+  frontend:
+    build:
+      target: build
+    working_dir: /app/frontend
+    command: ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
+    volumes:
+      - ./frontend/src:/app/frontend/src:ro
